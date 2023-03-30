@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cp template.c.t $1.c
+echo "\n$1: $1.o drw.o util.o \n \t \$(CC) -o \$@ $1.o drw.o util.o \$(LDFLAGS)" >> Makefile
