@@ -44,3 +44,6 @@ mpdnext: mpdnext.o drw.o util.o
 
 mpdprev: mpdprev.o drw.o util.o 
 	$(CC) -o $@ mpdprev.o drw.o util.o $(LDFLAGS)
+
+mpdinfo: mpdinfo.o drw.o util.o  
+	$(CC) -o $@ mpdinfo.o drw.o util.o $(LDFLAGS)

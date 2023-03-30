@@ -22,7 +22,7 @@ sh(const char* cmd, char* output)
     		die("could not read commands output");
   	}
 
-	output[strlen(output)-1] = '\0';
+	output[strlen(output)-1] = '\0'; /* remove newling charachter */
 
   	/* close */
   	pclose(fp);
