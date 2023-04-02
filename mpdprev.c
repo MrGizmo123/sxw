@@ -79,6 +79,15 @@ main(int argc, char** argv)
 	/* make sure to put ButtonPressMask if you want to detect clicks */
 	XSelectInput(dpy, win, ExposureMask | ButtonPressMask);
 
+
+	/* set class hint so dwm does not tile */
+	XClassHint* class_hint = XAllocClassHint();
+	
+	class_hint->res_name = "mpdprev";
+	class_hint->res_class = "widget";
+
+	XSetClassHint(dpy, win, class_hint);
+
 	/* put window on the screen */
 	XMapWindow(dpy, win);
 

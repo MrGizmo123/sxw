@@ -101,6 +101,14 @@ main(int argc, char** argv)
 	/* tell X11 that we want to receive Expose events */
 	XSelectInput(dpy, win, ExposureMask | ButtonPressMask);
 
+	/* set class hint so dwm does not tile */
+	XClassHint* class_hint = XAllocClassHint();
+	
+	class_hint->res_name = "mpdplay";
+	class_hint->res_class = "widget";
+
+	XSetClassHint(dpy, win, class_hint);
+
 	/* put window on the screen */
 	XMapWindow(dpy, win);
 

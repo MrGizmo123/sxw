@@ -7,11 +7,11 @@
 
 #include "drw.h"
 #include "util.h"
+#include "config.h"
 
 #define LENGTH(X) (sizeof X / sizeof X[0])
 #define TEXTW(X) (drw_fontset_getwidth(drw, (X)))
 
-enum { SchemeNorm, SchemeLast };
 
 static Display* dpy;
 static int scr;
@@ -20,8 +20,6 @@ static Window win;
 
 static Drw* drw;
 static Clr* scheme[SchemeLast];
-
-#include "config.h"
 
 #define WIDTH 200
 #define HEIGHT 100
@@ -74,8 +72,21 @@ main(int argc, char** argv)
 
 	win = XCreateSimpleWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, WhitePixel(dpy, scr), BlackPixel(dpy, scr));
 
+
+	/* set masks to recieve expose events */
 	XSelectInput(dpy, win, ExposureMask);
 
+
+	/* set class hint so dwm does not tile */
+	XClassHint* class_hint = XAllocClassHint();
+	
+	class_hint->res_name = "time";
+	class_hint->res_class = "widget";
+
+	XSetClassHint(dpy, win, class_hint);
+
+
+	/* put window on the screen */
 	XMapWindow(dpy, win);
 
 	/* create drw object to draw stuff */
@@ -90,9 +101,7 @@ main(int argc, char** argv)
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
-
-	redraw();
+	drw_setscheme(drw, scheme[SchemeRed]);
 
 	/* start updater thread */
 	

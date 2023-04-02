@@ -67,6 +67,16 @@ main(int argc, char** argv)
 	/* tell X11 that we want to receive Expose events */
 	XSelectInput(dpy, win, ExposureMask);
 
+	/* set class hint so dwm does not tile */
+	XClassHint* class_hint = XAllocClassHint();
+	
+	/* make SURE to change the res_name to the name of your widget */
+	size_hints->res_name = "template";
+	size_hints->res_class = "widget";
+
+	XSetClassHint(dpy, win, class_hint);
+
+
 	/* put window on the screen */
 	XMapWindow(dpy, win);
 
