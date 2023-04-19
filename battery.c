@@ -37,7 +37,7 @@ static void redraw()
 
 	/* get the battery remaining */
 	char output[16];
-	sh("echo    $(cat /sys/class/power_supply/BAT1/capacity)", output);
+	sh("echo    $(cat /sys/class/power_supply/BAT0/capacity)", output);
 
 	/* calculate position offset to put text in center */
 	int text_width = TEXTW(output);

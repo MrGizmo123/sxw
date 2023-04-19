@@ -14,7 +14,7 @@ options:
 	@echo "CC       = $(CC)"
 
 .c.o:
-	$(CC) -c $(CFLAGS) $<
+	$(CC) -c $(CFLAGS) $< 
 
 $(OBJ): config.h config.mk drw.h util.h
 
@@ -23,6 +23,9 @@ time: time.o drw.o util.o
 
 clean:
 	rm -f $(OUT) $(OBJ) 
+
+.PHONY: all
+all: $(OUT)
 
 battery: battery.o drw.o util.o 
 	$(CC) -o $@ battery.o drw.o util.o $(LDFLAGS)
@@ -45,5 +48,5 @@ mpdnext: mpdnext.o drw.o util.o
 mpdprev: mpdprev.o drw.o util.o 
 	$(CC) -o $@ mpdprev.o drw.o util.o $(LDFLAGS)
 
-mpdinfo: mpdinfo.o drw.o util.o  
+mpdinfo: mpdinfo.o drw.o util.o 
 	$(CC) -o $@ mpdinfo.o drw.o util.o $(LDFLAGS)

@@ -84,7 +84,7 @@ main(int argc, char** argv)
 	/* tell X11 that we want to receive Expose events */
 	XSelectInput(dpy, win, ExposureMask);
 
-	/* set class hint so dwm does not tile */
+	/* set class hint so dwm does not tile (needs a rule in the dwm config.h for floating 'widget' class windows)*/
 	XClassHint* class_hint = XAllocClassHint();
 	
 	class_hint->res_name = "mpdinfo";
