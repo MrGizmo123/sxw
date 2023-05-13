@@ -1,11 +1,18 @@
-# sxw - simple X widgets
+# sxw - simple X widgetsloaaa.la.la
 # See LICENSE file for copyright and license details.
 
 include config.mk
 
-SRC = $(wildcard ./*.c) #drw.c util.c time.c battery.c 
-OBJ = $(SRC:.c=.o)
-OUT = $(SRC:.c=)
+SRCDIR = src/
+OBJDIR = obj/
+BINDIR = bin/
+
+
+PROGS = time weather battery mpdplay mpdnext mpdprev mpdforward mpdback mpdinfo
+
+SRC = $(addprefix $(SRCDIR), $(addsuffix .c, $(PROGS))) 
+OBJ = $(addprefix $(OBJDIR), $(addsuffix .o, $(PROGS))) obj/drw.o obj/util.o
+OUT = $(addprefix $(BINDIR), $(PROGS))
 
 options:
 	@echo date build options:
@@ -13,40 +20,18 @@ options:
 	@echo "LDFLAGS  = $(LDFLAGS)"
 	@echo "CC       = $(CC)"
 
-.c.o:
-	$(CC) -c $(CFLAGS) $< 
+#.c.o:
+#	$(CC) -c $(CFLAGS) $< 
 
-$(OBJ): config.h config.mk drw.h util.h
+$(OBJ): $(SRCDIR)config.h config.mk $(SRCDIR)drw.h $(SRCDIR)util.h
 
-time: time.o drw.o util.o
-	$(CC) -o $@ time.o drw.o util.o $(LDFLAGS)
+$(OBJDIR)%.o : $(SRCDIR)%.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(BINDIR)% : $(OBJDIR)%.o $(OBJDIR)drw.o $(OBJDIR)util.o
+	$(CC) -o $@ $< $(OBJDIR)drw.o $(OBJDIR)util.o $(LDFLAGS) 
 
 clean:
-	rm -f $(OUT) $(OBJ) 
+	rm -f $(OUT) $(OBJ)  
 
-.PHONY: all
 all: $(OUT)
-
-battery: battery.o drw.o util.o 
-	$(CC) -o $@ battery.o drw.o util.o $(LDFLAGS)
-
-weather: weather.o drw.o util.o 
-	$(CC) -o $@ weather.o drw.o util.o $(LDFLAGS)
-
-mpdplay: mpdplay.o drw.o util.o 
-	$(CC) -o $@ mpdplay.o drw.o util.o $(LDFLAGS)
-
-mpdback: mpdback.o drw.o util.o 
-	$(CC) -o $@ mpdback.o drw.o util.o $(LDFLAGS)
-
-mpdforward: mpdforward.o drw.o util.o 
-	$(CC) -o $@ mpdforward.o drw.o util.o $(LDFLAGS)
-
-mpdnext: mpdnext.o drw.o util.o 
-	$(CC) -o $@ mpdnext.o drw.o util.o $(LDFLAGS)
-
-mpdprev: mpdprev.o drw.o util.o 
-	$(CC) -o $@ mpdprev.o drw.o util.o $(LDFLAGS)
-
-mpdinfo: mpdinfo.o drw.o util.o 
-	$(CC) -o $@ mpdinfo.o drw.o util.o $(LDFLAGS)

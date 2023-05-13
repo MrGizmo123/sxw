@@ -1,4 +1,6 @@
 #!/bin/sh
 
-cp template.c.t $1.c
-echo "\n$1: $1.o drw.o util.o \n \t \$(CC) -o \$@ $1.o drw.o util.o \$(LDFLAGS)" >> Makefile
+cp template.c.t src/$1.c
+
+gawk -i inplace -F ' ' -v new="$1" ' { if ($1 == "PROGS") { print $0, new }
+else { print } } ' Makefile
