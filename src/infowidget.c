@@ -23,12 +23,17 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 300
-#define HEIGHT 100
-#define UPDATE_TIME 2 /* in seconds */
+static int UPDATE_TIME = 2; /* in seconds */
 
 static int x_pos;
 static int y_pos;
+
+static int WIDTH;
+static int HEIGHT;
+
+static char* command;
+
+static int textsize;
 
 static void redraw()
 {
@@ -36,6 +41,13 @@ static void redraw()
 	drw_rect(drw, 0, 0, WIDTH, HEIGHT, 1, 1);
 
 	/* put whatever you want to draw here */
+
+	char text[32];
+	sh(command, text, 32);
+
+	int lpad = (WIDTH - TEXTW(text)) / 2;
+	drw_paragraph(drw, lpad, (HEIGHT - textsize)/2, WIDTH, HEIGHT, text, textsize, textsize * 0.3);	
+
 	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
 
 	/* put the drawn things onto the window */
@@ -61,12 +73,18 @@ main(int argc, char** argv)
 {
 
 	/* if x and y pos are not provided, then throw error */
-	if(argc < 3)
-		die("not enough arguments, run with x_pos and y_pos as cmd line arguments");
+	if(argc != 9)
+		die("usage: infowidget [xpos] [ypos] [width] [height] [textsize] [color] [update-time] [command]");
 	
 	/* convert string arguments to integers, argv[0] is the command itself */
 	x_pos = atoi(argv[1]);
 	y_pos = atoi(argv[2]);
+	WIDTH = atoi(argv[3]);
+	HEIGHT = atoi(argv[4]);
+	textsize = atoi(argv[5]);
+	int color = atoi(argv[6]);
+	UPDATE_TIME = atoi(argv[7]);
+	command = argv[8];
 
 	/* set alarm signal to update the widget contents */
 	signal(SIGALRM, sigalrm);
@@ -82,13 +100,13 @@ main(int argc, char** argv)
 	win = XCreateSimpleWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, WhitePixel(dpy, scr), BlackPixel(dpy, scr));
 
 	/* tell X11 that we want to receive Expose events */
-	XSelectInput(dpy, win, ExposureMask);
+	XSelectInput(dpy, win, ExposureMask | ButtonPressMask);
 
 	/* set class hint so dwm does not tile */
 	XClassHint* class_hint = XAllocClassHint();
 	
 	/* make SURE to change the res_name to the name of your widget */
-	class_hint->res_name = "template";
+	class_hint->res_name = "infowidget";
 	class_hint->res_class = "widget";
 
 	XSetClassHint(dpy, win, class_hint);
@@ -101,7 +119,10 @@ main(int argc, char** argv)
 	drw = drw_create(dpy, scr, root, WIDTH, HEIGHT);
 
 	
-	const char* fonts[] = {"monospace:size=10"};
+	char buf[64];
+	snprintf(buf, 64, "iosevka:size=%d", textsize);
+
+	const char* fonts[] = { buf };
 	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
@@ -109,7 +130,7 @@ main(int argc, char** argv)
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[color]);
 	
 
 	/* start updater thread */
@@ -124,6 +145,7 @@ main(int argc, char** argv)
 		{
 			case Expose:
 				redraw();
+				break;
 		}
 	}
 

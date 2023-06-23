@@ -25,7 +25,7 @@ sh(const char* cmd, char* output, int output_size)
 
   	/* Read the first line of output, if cannot then throw error */
   	if (fgets(output, output_size, fp) == NULL) {
-    		die("could not read commands output");
+    		fprintf(stderr, "%s %s \n", "could not read commands output, command:", cmd);
   	}
 
 	//output[strlen(output) - 1] = '\0'; /* remove newline charachter */

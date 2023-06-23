@@ -23,12 +23,15 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 300
-#define HEIGHT 100
-#define UPDATE_TIME 2 /* in seconds */
+#define WIDTH 250
+#define HEIGHT 150
+#define UPDATE_TIME 3600 /* in seconds */
 
 static int x_pos;
 static int y_pos;
+
+static Fnt* big;
+static Fnt* small;
 
 static void redraw()
 {
@@ -36,6 +39,26 @@ static void redraw()
 	drw_rect(drw, 0, 0, WIDTH, HEIGHT, 1, 1);
 
 	/* put whatever you want to draw here */
+
+	char output[32];
+	sh("./planets.sh | tr -s ' '", output, 32);
+
+	char* event;
+	char* time;
+	char* delimiter = "$";
+
+	event = strtok(output, delimiter);
+	time = strtok(NULL, delimiter);
+
+	drw_setfontset(drw, big);
+
+	int lpad = (WIDTH - TEXTW(event)) / 2;
+	drw_text(drw, lpad, 0, WIDTH, 100, 0, event, 0);
+
+	drw_setfontset(drw, small);
+	int timewidth = TEXTW(time);
+	drw_text(drw, lpad, 70, timewidth, 50, 0, time, 0);
+		
 	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
 
 	/* put the drawn things onto the window */
@@ -88,7 +111,7 @@ main(int argc, char** argv)
 	XClassHint* class_hint = XAllocClassHint();
 	
 	/* make SURE to change the res_name to the name of your widget */
-	class_hint->res_name = "template";
+	class_hint->res_name = "planets";
 	class_hint->res_class = "widget";
 
 	XSetClassHint(dpy, win, class_hint);
@@ -101,15 +124,17 @@ main(int argc, char** argv)
 	drw = drw_create(dpy, scr, root, WIDTH, HEIGHT);
 
 	
-	const char* fonts[] = {"monospace:size=10"};
-	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
-		die("no fonts could be loaded.");
+	const char* font_big[] = {"iosevka:size=30"};
+	const char* font_small[] = {"iosevka:size=20"};
+
+	big = drw_fontset_create(drw, font_big, 1);
+	small = drw_fontset_create(drw, font_small, 1);
 
 	/* initialize color schemes from config.h */
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[SchemeGreen]);
 	
 
 	/* start updater thread */

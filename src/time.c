@@ -24,7 +24,7 @@ static XSetWindowAttributes xwa;
 static Drw* drw;
 static Clr* scheme[SchemeLast];
 
-#define WIDTH 200
+#define WIDTH 210
 #define HEIGHT 100
 #define UPDATE_TIME 2 /* in seconds */
 
@@ -54,14 +54,14 @@ static void redraw()
 
 void sigalrm(int signum)
 {
+
 	XEvent exppp;
 
 	memset(&exppp, 0, sizeof(exppp));
-        exppp.type = Expose;
-        exppp.xexpose.window = win;
-        XSendEvent(dpy,win,False,ExposureMask,&exppp);
-        XFlush(dpy);
-
+  exppp.type = Expose;
+  exppp.xexpose.window = win;
+  XSendEvent(dpy,win,False,ExposureMask,&exppp);
+  XFlush(dpy);
 	alarm(UPDATE_TIME);
 }
 
@@ -72,7 +72,7 @@ main(int argc, char** argv)
 	/* if x and y pos are not provided, then throw error */
 	if(argc < 3)
 		die("not enough arguments, run with x_pos and y_pos as cmd line arguments");
-	
+
 	/* convert string arguments to integers, argv[0] is the command itself */
 	x_pos = atoi(argv[1]);
 	y_pos = atoi(argv[2]);

@@ -16,6 +16,7 @@
 
 static Display* dpy;
 static int scr;
+static XSetWindowAttributes xwa;
 static Window root;
 static Window win;
 
@@ -23,19 +24,66 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 300
-#define HEIGHT 100
-#define UPDATE_TIME 2 /* in seconds */
+#define WIDTH 50
+#define HEIGHT 50
+#define UPDATE_TIME 1 /* in seconds */
 
 static int x_pos;
 static int y_pos;
+static char* symbol; /* the symbol to display */
+static int tag; /* for nth tag it equals 2^n */
+static int state; /* first bit gives selected state
+                     second bit gives occupied state
+                     third bit gives urgent state
 
-static void redraw()
+                     e.g.
+                     state = 0 b 0 1 1 (binary form)
+                                 | | |
+                                 | | It is currently selected
+                                 | |
+                                 | It is occupied by some window
+                                 |
+                                 No urgent message on this tag
+
+                     */
+
+static void redraw(int action)
 {
 	/* clear screen of previous contents */
 	drw_rect(drw, 0, 0, WIDTH, HEIGHT, 1, 1);
 
 	/* put whatever you want to draw here */
+
+  char selected_str[4];
+  sh("dwm-msg get_monitors | jq '.[0].tag_state.selected'", selected_str, 4);
+  char occupied_str[4];
+  sh("dwm-msg get_monitors | jq '.[0].tag_state.occupied'", occupied_str, 4);
+  char urgent_str[4];
+  sh("dwm-msg get_monitors | jq '.[0].tag_state.urgent'", urgent_str, 4);
+
+  int selected = atoi(selected_str);
+  int occupied = atoi(occupied_str);
+  int urgent = atoi(urgent_str);
+
+  int width = TEXTW(symbol);
+  int lpad = (WIDTH - width) / 2;
+
+  drw_text(drw, lpad, 0, WIDTH, HEIGHT, 0, symbol, 0);
+
+  if(tag & urgent)
+  {
+    drw_rect(drw, 0, 0, WIDTH, HEIGHT , 1, 1);
+  }
+  if(tag & selected)
+  {
+    drw_rect(drw, 0, HEIGHT - 10, WIDTH, 10, 1, 0);
+  }
+  if(tag & occupied)
+  {
+    drw_rect(drw, 5, 5, 10, 10, 1, 0);
+  }
+
+
 	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
 
 	/* put the drawn things onto the window */
@@ -61,12 +109,15 @@ main(int argc, char** argv)
 {
 
 	/* if x and y pos are not provided, then throw error */
-	if(argc < 3)
-		die("not enough arguments, run with x_pos and y_pos as cmd line arguments");
+	if(argc != 5)
+		die("not enough arguments, run with x_pos, y_pos, tag and symbol as cmd line arguments");
 	
 	/* convert string arguments to integers, argv[0] is the command itself */
 	x_pos = atoi(argv[1]);
 	y_pos = atoi(argv[2]);
+
+  	tag = atoi(argv[3]);
+  	symbol = argv[4];
 
 	/* set alarm signal to update the widget contents */
 	signal(SIGALRM, sigalrm);
@@ -79,10 +130,15 @@ main(int argc, char** argv)
 	/* create window */
 	scr = DefaultScreen(dpy);
 	root = RootWindow(dpy, scr);
-	win = XCreateSimpleWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, WhitePixel(dpy, scr), BlackPixel(dpy, scr));
+
+	xwa.background_pixel = BlackPixel(dpy, scr);
+	xwa.override_redirect = 1;
+
+	win = XCreateWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, DefaultDepth(dpy, scr), InputOutput, DefaultVisual(dpy, scr), CWBackPixel | CWOverrideRedirect, &xwa);
+	//win = XCreateSimpleWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, WhitePixel(dpy, scr), BlackPixel(dpy, scr));
 
 	/* tell X11 that we want to receive Expose events */
-	XSelectInput(dpy, win, ExposureMask);
+	XSelectInput(dpy, win, ExposureMask | ButtonPressMask);
 
 	/* set class hint so dwm does not tile */
 	XClassHint* class_hint = XAllocClassHint();
@@ -101,7 +157,7 @@ main(int argc, char** argv)
 	drw = drw_create(dpy, scr, root, WIDTH, HEIGHT);
 
 	
-	const char* fonts[] = {"monospace:size=10"};
+	const char* fonts[] = {"iosevka:size=17"};
 	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
@@ -109,12 +165,12 @@ main(int argc, char** argv)
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[SchemeYellow]);
 	
 
 	/* start updater thread */
 	alarm(UPDATE_TIME);
-	redraw();
+	redraw(0);
 
 	/* main loop */
 	XEvent ev;
@@ -123,7 +179,12 @@ main(int argc, char** argv)
 		switch(ev.type)
 		{
 			case Expose:
-				redraw();
+        redraw(0);
+        break;
+      case ButtonPress:
+        if(ev.xbutton.button == Button1)
+          redraw(1);
+				break;
 		}
 	}
 

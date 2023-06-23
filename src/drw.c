@@ -384,6 +384,27 @@ no_match:
 	return x + (render ? w : 0);
 }
 
+int
+drw_paragraph(Drw* drw, int x, int y, int width, int height, char* text, int fontsize, int line_spacing)
+{
+  int current_y = y;
+
+  const char newline[2] = "$";
+  char* line;
+
+  line = strtok(text, newline);
+
+  while(line)
+  {
+    drw_text(drw, x, current_y, width, fontsize, 0, line, 0);
+    current_y += (fontsize + line_spacing);
+    
+    line = strtok(NULL, newline);
+  }
+
+  return 0;
+}
+
 void
 drw_map(Drw *drw, Window win, int x, int y, unsigned int w, unsigned int h)
 {

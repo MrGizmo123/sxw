@@ -23,19 +23,35 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 300
-#define HEIGHT 100
+#define WIDTH 100
+#define HEIGHT 50
 #define UPDATE_TIME 2 /* in seconds */
 
 static int x_pos;
 static int y_pos;
 
-static void redraw()
+static void redraw(int increment)
 {
 	/* clear screen of previous contents */
 	drw_rect(drw, 0, 0, WIDTH, HEIGHT, 1, 1);
 
 	/* put whatever you want to draw here */
+
+	char buffer[4];
+	char set_command[24];
+	snprintf(set_command, 24, "xbacklight -inc %d", increment);
+
+	/* increment (or decrement) the brightness */
+	sh(set_command, buffer, 4);
+
+	/* get the brightness */
+	char brightness[8];
+	sh("echo   $(xbacklight -get | cut -d '.' -f1)", brightness, 8);
+	
+	int lpad = (WIDTH - TEXTW(brightness)) / 2;
+
+	drw_text(drw, lpad, 0, WIDTH, HEIGHT, 0, brightness, 0);
+
 	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
 
 	/* put the drawn things onto the window */
@@ -82,13 +98,13 @@ main(int argc, char** argv)
 	win = XCreateSimpleWindow(dpy, root, x_pos, y_pos, WIDTH, HEIGHT, 0, WhitePixel(dpy, scr), BlackPixel(dpy, scr));
 
 	/* tell X11 that we want to receive Expose events */
-	XSelectInput(dpy, win, ExposureMask);
+	XSelectInput(dpy, win, ExposureMask | ButtonPressMask);
 
 	/* set class hint so dwm does not tile */
 	XClassHint* class_hint = XAllocClassHint();
 	
 	/* make SURE to change the res_name to the name of your widget */
-	class_hint->res_name = "template";
+	class_hint->res_name = "brightness";
 	class_hint->res_class = "widget";
 
 	XSetClassHint(dpy, win, class_hint);
@@ -101,7 +117,7 @@ main(int argc, char** argv)
 	drw = drw_create(dpy, scr, root, WIDTH, HEIGHT);
 
 	
-	const char* fonts[] = {"monospace:size=10"};
+	const char* fonts[] = {"iosevka:size=21"};
 	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
@@ -109,12 +125,12 @@ main(int argc, char** argv)
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[SchemeBlue]);
 	
 
 	/* start updater thread */
 	alarm(UPDATE_TIME);
-	redraw();
+	redraw(0);
 
 	/* main loop */
 	XEvent ev;
@@ -123,7 +139,14 @@ main(int argc, char** argv)
 		switch(ev.type)
 		{
 			case Expose:
-				redraw();
+				redraw(0);
+				break;
+			case ButtonPress:
+				if(ev.xbutton.button == Button4)
+					redraw(5);
+				else if (ev.xbutton.button == Button5)
+					redraw(-5);
+				break;
 		}
 	}
 

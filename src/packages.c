@@ -23,9 +23,9 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 300
-#define HEIGHT 100
-#define UPDATE_TIME 2 /* in seconds */
+#define WIDTH 100
+#define HEIGHT 50
+#define UPDATE_TIME 10 /* in seconds */
 
 static int x_pos;
 static int y_pos;
@@ -36,7 +36,13 @@ static void redraw()
 	drw_rect(drw, 0, 0, WIDTH, HEIGHT, 1, 1);
 
 	/* put whatever you want to draw here */
-	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
+
+	char num_pkgs[16];
+	sh("echo   $(xbps-query -l | grep ^ii | wc -l)", num_pkgs, 16);
+
+	int lpad = (WIDTH - TEXTW(num_pkgs)) / 2;
+
+	drw_text(drw, lpad, 0, WIDTH, HEIGHT, 0, num_pkgs, 0);
 
 	/* put the drawn things onto the window */
 	drw_map(drw, win, 0, 0, WIDTH, HEIGHT);
@@ -101,7 +107,7 @@ main(int argc, char** argv)
 	drw = drw_create(dpy, scr, root, WIDTH, HEIGHT);
 
 	
-	const char* fonts[] = {"monospace:size=10"};
+	const char* fonts[] = {"iosevka:size=20:style=bold"};
 	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
@@ -109,7 +115,7 @@ main(int argc, char** argv)
 	for (int i=0;i<SchemeLast;i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 2);
 
-	drw_setscheme(drw, scheme[SchemeNorm]);
+	drw_setscheme(drw, scheme[SchemePurple]);
 	
 
 	/* start updater thread */

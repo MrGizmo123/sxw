@@ -39,7 +39,7 @@ static void redraw()
 	/* put whatever you want to draw here */
 
 	char name[32];
-	sh("mpc current | awk -F '.' ' { print \"Playing \" $1 } '", name, 32);
+	sh("mpc current | awk -F '.' ' { print $1 } '", name, 32);
 
 	char percent_str[4];
 	sh("mpc status \%percenttime\% | tr -d ' %'", percent_str, 4);
@@ -50,7 +50,7 @@ static void redraw()
 	int barwidth = percent * (WIDTH - 2*pad) / 100;
 
 	drw_text(drw, 10,  0, WIDTH, 30, 0, name, 0);
-	drw_rect(drw, 0, 30, barwidth, 30, 1, 0);
+	drw_rect(drw, 0, 35, barwidth, 30, 1, 0);
 	
 
 	/* you should only be changing this part and the WIDTH, HEIGHT and UPDATE_TIME */
@@ -119,7 +119,7 @@ main(int argc, char** argv)
 	/* start updater thread */
 	alarm(UPDATE_TIME);
 	
-	const char* fonts[] = {"iosevka:size=20"};
+	const char* fonts[] = {"iosevka:size=18"};
 	if(!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 
