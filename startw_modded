@@ -1,5 +1,7 @@
 #!/bin/sh
 
+#some more modding
+
 bin/iconbutton 150 510 75 75 37  1 'mpc prev' & 
 bin/iconbutton 243 510 75 75 37  0 'mpc seek -00:00:10' &
 bin/iconbutton 429 510 75 75 37  0 'mpc seek +00:00:10' &
@@ -7,6 +9,8 @@ bin/iconbutton 522 510 75 75 37  1 'mpc next' &
 bin/iconbutton 150 600 112 112 52  3 'sudo reboot' & 
 bin/iconbutton 150 727 112 112 52  4 'sudo poweroff' & 
 bin/iconbutton 150 855 112 112 52  2 'pkill -u liquidcat' &
+
+#these are the info widgets which display some data, thats it
 
 bin/infowidget 540 315 150 75 34 2 'echo $(cat /sys/class/power_supply/BAT0/capacity)' &                      
 bin/infowidget 540 150 315 150 75 0 'date +%H:%M' &                       

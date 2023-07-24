@@ -1,6 +1,8 @@
 #!/bin/sh
 
+#create new file in src folder
 cp template.c.t src/$1.c
 
+#add the new widget to the makefile
 gawk -i inplace -F ' ' -v new="$1" ' { if ($1 == "PROGS") { print $0, new }
 else { print } } ' Makefile
