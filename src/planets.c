@@ -25,7 +25,7 @@ static Clr* scheme[SchemeLast];
 
 #define WIDTH 250
 #define HEIGHT 150
-#define UPDATE_TIME 3600 /* in seconds */
+#define UPDATE_TIME 300 /* in seconds */
 
 static int x_pos;
 static int y_pos;

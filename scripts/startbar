@@ -1,0 +1,5 @@
+#!/bin/sh
+
+#                 x     y    w     h   override-redirect font-size   color  update time   command
+bin/infowidget 1790  20   110   42  1                   24          0      10            'date +%H:%M' &
+bin/infowidget 1680  20   110   42  1                   24          0      10            'date +%d:%M' &

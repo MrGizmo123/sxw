@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# special widgets
+#                xpos   ypos
+bin/weather      400    200   &
+bin/mpdinfo      400    370   &
+bin/mpdplay      524    440   &
+bin/brightness   770    310   &
+bin/volume       815    500   &
+bin/quote        990    310   &
+bin/planets      990    530   &
+
+# icon buttons (clickable widgets)
+#                x    y    w   h   override-redirect  font-size  symbol  color  command
+bin/iconbutton 400  440   50  50      0                  25                1      'mpc prev' & 
+bin/iconbutton 462  440   50  50      0                  25               0      'mpc seek -00:00:10' &
+bin/iconbutton 586  440   50  50      0                  25               0      'mpc seek +00:00:10' &
+bin/iconbutton 648  440   50  50      0                  25                1      'mpc next' &
+bin/iconbutton 400  500   75  73      0                  35               3      'sudo reboot' &
+bin/iconbutton 400  583   75  73      0                  35               4      'sudo poweroff' &
+bin/iconbutton 400  668   75  73      0                  35               2      'pkill -u liquidcat' &
+bin/iconbutton 880  200   100 100     0                  50               2      'firefox www.reddit.com' &
+bin/iconbutton 880  310   100 100     0                  50               0      'emacs' &
+bin/iconbutton 880  420   100 100     0                  50               1      'firefox www.youtube.com' &
+bin/iconbutton 880  530   100 100     0                  50               3      'firefox www.google.com' &
+bin/iconbutton 880  640   100 100     0                  50               4      'st -e neomutt' &
+bin/iconbutton 710  370   160 120     0                  60               4      '~/Music/music_selector.sh' &
+bin/iconbutton 1250 530   190 150     0                  60               4      '' &
+
+# info widgets (non-clickable widgets) (update times are in seconds)
+#              x    y    w     h      override-redirect font-size   color  update time   command
+bin/infowidget 660  310  100   50     0                  23          2      10            'echo $(cat /sys/class/power_supply/BAT0/capacity)' &
+bin/infowidget 660  200  210   100    0                  50          0      10            'date +%H:%M' &
+bin/infowidget 485  500  150   50     0                  18          2      10            'echo " "$(ifstat | grep wlp3s0 | tr -s " " | cut -d " " -f6 | sed "s/K/000/g" | numfmt --to=iec-i)"B/s"' &
+bin/infowidget 485  565  150   50     0                  18          4      2             'echo " "$(ifstat | grep wlp3s0 | tr -s " " | cut -d " " -f8 | sed "s/K/000/g" | numfmt --to=iec-i)"B/s"' &
+bin/infowidget 485  625  150   50     0                  18          3      2             'echo " "$(top -bn 2 -d 0.01 | grep "^%Cpu" | tail -n 1 | gawk -f cpu.awk)"%"' &
+bin/infowidget 485  690  150   50     0                  18          3      2             'echo " "$(./meminfo.sh)"B"' &
+bin/infowidget 645  500  160   115    0                  40          2      3600          'echo ""$(xbps-install -un | wc -l) ' &
+bin/infowidget 990  200  450   100    0                  40          5      3600          './greeting.sh' &
+bin/infowidget 645  625  160   115    0                  30          1      3600          'date +"%d %b"' &
+bin/infowidget 990  690  450   50     0                  20          3      10            'uptime -p' &
+

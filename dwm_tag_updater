@@ -1,8 +1,0 @@
-#!/usr/bin/bash
-
-dwm-msg --ignore-reply subscribe tag_change_event |
-  jq --unbuffered '.tag_change_event.new_state.selected' |
-  while IFS=$'\n' read -r selected_tags; do
-    # Function to update tags on status bar
-    pkill -ALRM dwmtag
-  done

@@ -23,7 +23,7 @@ static Drw* drw;
 static Clr* scheme[SchemeLast];
 
 
-#define WIDTH 50
+#define WIDTH 55
 #define HEIGHT 240
 
 #define BARHEIGHT 200
