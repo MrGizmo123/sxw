@@ -7,8 +7,7 @@ SRCDIR = src/
 OBJDIR = obj/
 BINDIR = bin/
 
-
-PROGS = time weather battery mpdplay mpdinfo brightness packages iconbutton infowidget dwmtag volume quote planets
+PROGS = weather mpdplay mpdinfo brightness iconbutton infowidget volume quote planets
 
 SRC = $(addprefix $(SRCDIR), $(addsuffix .c, $(PROGS))) 
 OBJ = $(addprefix $(OBJDIR), $(addsuffix .o, $(PROGS))) obj/drw.o obj/util.o

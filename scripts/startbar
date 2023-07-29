@@ -1,5 +1,16 @@
 #!/bin/sh
 
-#                 x     y    w     h   override-redirect font-size   color  update time   command
-bin/infowidget 1790  20   110   42  1                   24          0      10            'date +%H:%M' &
-bin/infowidget 1680  20   110   42  1                   24          0      10            'date +%d:%M' &
+#                 x   y    w     h   override-redirect font-size   color  update time   command
+bin/infowidget 1810  20   90    42     1                   18          0      10            'date +"%H:%M"' &
+bin/infowidget 1670  20   130   42     1                   18          1      10            'date +"%d %b"' &
+bin/infowidget 1560  20   100   42     1                   18          2      10            'echo  $(cat /sys/class/power_supply/BAT0/capacity)' &
+bin/infowidget 1400  20   150   42     1                   18          3      2             'echo " "$(ifstat | grep wlp3s0 | tr -s " " | cut -d " " -f6 | sed "s/K/000/g" | numfmt --to=si)"B/s"' &
+bin/infowidget 1240  20   150   42     1                   18          4      2             'echo " "$(ifstat | grep wlp3s0 | tr -s " " | cut -d " " -f8 | sed "s/K/000/g" | numfmt --to=si)"B/s"' &
+
+#special widget  x       y     w       h    override-redirect  font-size
+bin/mpdplay      939     20   42      42    1                  24            &
+
+# icon buttons (clickable widgets)
+#                x    y    w    h   override-redirect  font-size  symbol  color      command
+bin/iconbutton 887    20   42   42      1                  24               0      'mpc seek -00:00:10' &
+bin/iconbutton 991    20   42   42      1                  24               0      'mpc seek +00:00:10' &

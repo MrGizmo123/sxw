@@ -41,7 +41,7 @@ static void redraw()
 	/* put whatever you want to draw here */
 
 	char quote[1024];
-	sh("shuf --random-source=/dev/urandom -n1 quotes.txt | sed 's/-/\\n       -/g' | fold -s -w 37 | tr '\n' '$' ", quote, 1024);
+	sh("shuf --random-source=/dev/urandom -n1 data/quotes.txt | sed 's/-/\\n       -/g' | fold -s -w 37 | tr '\n' '$' ", quote, 1024);
 
 	char* quoteline;
 	char* source;

@@ -41,7 +41,7 @@ static void redraw()
 	/* put whatever you want to draw here */
 
 	char output[32];
-	sh("./planets.sh | tr -s ' '", output, 32);
+	sh("scripts/planets.sh | tr -s ' '", output, 32);
 
 	char* event;
 	char* time;
