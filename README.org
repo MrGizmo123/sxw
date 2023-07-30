@@ -38,6 +38,8 @@ Some widgets require some commands to be available, they are given here:
 + music widgets - ~mpd~ and ~mpc~
 + network - ~ifstat~ (package name is usually ~iproute2~)
 + battery - check the path for your device. It is something like ~/sys/class/power_supply/BAT0/capacity~
+
+The rounded corners seen the screenshots are due to the compositor (picom in this case).
   
 ** Different screen size
 The default setup is made for a 1920x1080 screen. It will look off centered and wierd on other sizes. A helper script: ~scripts/resizer~ is given. Resizer is used as follows
