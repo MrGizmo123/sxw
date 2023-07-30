@@ -22,8 +22,25 @@ This will compile all the files into executables, it will not put them in ~/usr/
 
 This requires fonts ~iosevka~ and ~Font Awesome 6~ to be installed on the system. ~iosevka~ should be available through your package manager, ~Font Awesome 6~ may not be available on some distros <insert Debian stable meme>.
 
+You will need to create the obj/ and bin/ directories in the main repo directory.
+
+#+begin_src shell
+mkdir bin obj
+#+end_src
+
+
 * Usage
 The script ~scripts/startw~ contains a layout (the one from the image). To start it simply run the ~startw~ script. There is also ~script/startbar~ which will start the status bar seen in the image.
+
+#+begin_src shell
+scripts/startw 2>/dev/null
+#+end_src
+
+or
+
+#+begin_src shell
+scripts/startbar 2>/dev/null
+#+end_src
 
 Your window manager must have a rule that
 + Allows windows with class ~widget~ to float
