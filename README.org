@@ -13,8 +13,8 @@ Before installing it you will need some xorg development files. Install these pa
 
 Just clone this repo onto your machine and compile and install it.
 #+begin_src shell
-git clone <repo>
-cd <repo>
+git clone https://github.com/MrGizmo123/sxw
+cd https://github.com/MrGizmo123/sxw
 sudo make all
 #+end_src
 
@@ -70,7 +70,12 @@ These are custom widgets that do things that are more complicated than the gener
 + planets - displays the next nearest rising or setting time of the Mercury, Venus, Mars, Jupiter, Saturn. Reads data from file ~data/rts-data~ (Calculated using [[https:stellarium.org][Stellarium]], you will need to recalculate this to match your location)
 + mpdinfo - displays name of song playing and shows a(non interactive) progress bar
 + mpdplay - just a playbutton
-  
+
+To start them, run the following, the position, width and height are in pixels, the origin is at the top left of the screen
+#+begin_src shell
+bin/<widget> [xpos] [ypos] [width] [height] [override-redirect] [textsize]
+#+end_src
+
 ** Creating your own widgets
 First before doing this, think if you can break what you are trying to acheive into smaller simpler parts. Most functionality can be acheived with just ~iconbutton~ and ~infowidget~, this is preferrable as it is much faster and easier to do ([[https://en.wikipedia.org/wiki/Unix_philosophy][Unix Philosophy!]]).
 

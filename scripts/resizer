@@ -1,2 +1,2 @@
 #!/bin/sh
-awk -v ow=$1 -v oh=$2 -v nw=$3 -v nh=$4 -f resizer.awk $5
+sed '/#/d;/^$/d' $5 |awk -v ow=$1 -v oh=$2 -v nw=$3 -v nh=$4 -f resizer.awk 

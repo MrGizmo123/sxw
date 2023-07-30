@@ -7,13 +7,13 @@
 
 # special widgets (some need width and height)
 #                xpos    ypos  width   height    overide-redirect font-size
-bin/weather      440     270                                                  &
-bin/mpdinfo      440     440                                                  &
-bin/mpdplay      564     510   50      50        0                30          &
-bin/brightness   810     380                                                  &
-bin/volume       855     570                                                  &
-bin/quote        1030    380                                                  &
-bin/planets      1030    600                                                  &
+bin/weather      440     270   250     160       0                35          &
+bin/mpdinfo      440     440   300     60         0               18          &
+bin/mpdplay      564     510   50      50         0               30          &
+bin/brightness   810     380   100     50         0               21          &
+bin/volume       855     570   55      240        0               18          &
+bin/quote        1030    380   450     210        0               17          &
+bin/planets      1030    600   240     150        0               30          &
 
 # icon buttons (clickable widgets)
 #                x    y    w   h   override-redirect  font-size  symbol  color      command
