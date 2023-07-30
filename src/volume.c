@@ -23,12 +23,6 @@ static XSetWindowAttributes xwa;
 static Drw* drw;
 static Clr* scheme[SchemeLast];
 
-
-//#define WIDTH 55
-//#define HEIGHT 240
-
-//#define BARHEIGHT 200
-
 #define UPDATE_TIME 1 /* in seconds */
 
 #define SYMBOL_LOW ""
@@ -193,7 +187,8 @@ main(int argc, char** argv)
 
     /* main loop */
     XEvent ev;
-    while(XNextEvent(dpy, &ev) == 0) {	    switch(ev.type)		{
+    while(XNextEvent(dpy, &ev) == 0) {
+	switch(ev.type){
 	case Expose:
 	    redraw(0);
 	    break;

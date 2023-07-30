@@ -23,9 +23,6 @@ static XSetWindowAttributes xwa;
 static Drw* drw;
 static Clr* scheme[SchemeLast];
 
-
-//#define WIDTH 450
-//#define HEIGHT 210
 #define UPDATE_TIME 3600 /* in seconds */
 
 static int x_pos;

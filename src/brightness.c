@@ -23,9 +23,6 @@ static XSetWindowAttributes xwa;
 static Drw* drw;
 static Clr* scheme[SchemeLast];
 
-
-//#define WIDTH 100
-//#define HEIGHT 50
 #define UPDATE_TIME 2 /* in seconds */
 
 static int x_pos;
@@ -52,7 +49,7 @@ static void redraw(int increment)
 
     /* get the brightness */
     char brightness[8];
-    sh("echo   $(xbacklight -get | cut -d '.' -f1)", brightness, 8);
+    sh("echo 	$(xbacklight -get | cut -d '.' -f1)", brightness, 8);
 	
     int lpad = (WIDTH - TEXTW(brightness)) / 2;
 

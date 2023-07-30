@@ -23,9 +23,6 @@ static XSetWindowAttributes xwa;
 static Drw* drw;
 static Clr* scheme[SchemeLast];
 
-
-//#define WIDTH 250
-//#define HEIGHT 150
 #define UPDATE_TIME 300 /* in seconds */
 
 static int x_pos;
@@ -144,7 +141,7 @@ main(int argc, char** argv)
 
 
     char big_font_buf[64];
-    snprintf(big_font_buf, 64, "iosevka:size=%d", textsize); //default is 35
+    snprintf(big_font_buf, 64, "iosevka:size=%d", textsize);
     char small_font_buf[64];
     snprintf(small_font_buf, 64, "iosevka:size=%d", (int)(textsize * 0.6667));
     
