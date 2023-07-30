@@ -30,6 +30,15 @@ Your window manager must have a rule that
 
 To start the status bar, simply run ~scripts/startbar~
 
+Some widgets require some commands to be available, they are given here:
++ weather - ~curl~
++ volume - ~pactl~ (package name is usually ~pulseaudio-utils~)
++ updates - This requires that you change the code in ~startw~ to work with your package manager, the default is for ~xbps~ (Void GNU/Linux)
++ brightness - ~xbacklight~
++ music widgets - ~mpd~ and ~mpc~
++ network - ~ifstat~ (package name is usually ~iproute2~)
++ battery - check the path for your device. It is something like ~/sys/class/power_supply/BAT0/capacity~
+  
 ** Different screen size
 The default setup is made for a 1920x1080 screen. It will look off centered and wierd on other sizes. A helper script: ~scripts/resizer~ is given. Resizer is used as follows
 #+begin_src shell
@@ -104,7 +113,7 @@ static const char* colors[SchemeLast][2] = {
         [SchemeBlue]       = { "#83a598", "#222222"},
         [SchemePurple]     = { "#d3869b", "#222222"},
         [SchemeAqua]       = { "#8ec07c", "#222222"},
-	  [SchemeLightGrey]  = { "#ffffff", "#444444"}
+        [SchemeLightGrey]  = { "#ffffff", "#444444"}
 };
 #+end_src
 
@@ -118,7 +127,7 @@ static const char* colors[SchemeLast][2] = {
         [SchemeBlue]       = { "#6385a8", "#ffffb0"},
         [SchemePurple]     = { "#b3567b", "#ffffb0"},
         [SchemeAqua]       = { "#6ea05c", "#ffffb0"},
-	  [SchemeLightGrey]  = { "#ffffff", "#ffffb0"}
+        [SchemeLightGrey]  = { "#ffffff", "#ffffb0"}
 };
 #+end_src
 
