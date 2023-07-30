@@ -20,6 +20,8 @@ sudo make all
 
 This will compile all the files into executables, it will not put them in ~/usr/bin~ so they wont be in the shells ~PATH~. You can just copy all the executables in the bin folder info ~/usr/bin~ if that's what you want.
 
+This requires fonts ~iosevka~ and ~Font Awesome 6~ to be installed on the system. ~iosevka~ should be available through your package manager, ~Font Awesome 6~ may not be available on some distros <insert Debian stable meme>.
+
 * Usage
 The script ~scripts/startw~ contains a layout (the one from the image). To start it simply run the ~startw~ script. There is also ~script/startbar~ which will start the status bar seen in the image.
 
