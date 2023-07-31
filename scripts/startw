@@ -1,5 +1,8 @@
 #!/bin/sh
 
+PWD=~/projects/simple_x_widgets
+cd $PWD
+
 # background
 #                x    y    w   h   override-redirect  font-size  symbol  color      command
 # bin/iconbutton 430  260   1060 560     0                  60         ""      6      '' &

@@ -32,6 +32,8 @@ mkdir bin obj
 * Usage
 The script ~scripts/startw~ contains a layout (the one from the image). To start it simply run the ~startw~ script. There is also ~script/startbar~ which will start the status bar seen in the image.
 
+Both ~scripts/startw~ and ~scripts/startbar~ contain a variable called ~PWD~, that must be set to the absolute path of the repo on your machine. For example, I have it set to ~~/projects/simple_x_widgets~. This is so that these scripts can be called at startup (basically in your ~~/.xinitrc~).
+
 #+begin_src shell
 scripts/startw 2>/dev/null
 #+end_src

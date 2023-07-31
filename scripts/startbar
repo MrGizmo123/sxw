@@ -1,5 +1,8 @@
 #!/bin/sh
 
+PWD=~/projects/simple_x_widgets
+cd $PWD
+
 #                 x   y    w     h   override-redirect font-size   color  update time   command
 bin/infowidget 1810  20   90    42     1                   18          0      10            'date +"%H:%M"' &
 bin/infowidget 1670  20   130   42     1                   18          1      10            'date +"%d %b"' &
