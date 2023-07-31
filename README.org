@@ -65,8 +65,9 @@ The default setup is made for a 1920x1080 screen. It will look off centered and 
 #+begin_src shell
 cd scripts
 ./resizer [original width] [original height] [new width] [new height] startw > startw_resized
+chmod +x startw_resized
 #+end_src
-Here the original width and height will be 1920 and 1080, and the new width and new height will be the dimensions of your screen. This will create a script called startw_resized(name doesn't really matter). ~startw_modded~ will then be adjusted to the size of your screen.
+Here the original width and height will be 1920 and 1080, and the new width and new height will be the dimensions of your screen. This will create a script called startw_resized(name doesn't really matter). ~startw_resized~ will then be adjusted to the size of your screen.
 To resize the status bar, simply replace 'startw' with 'startbar' and 'startw_resized' to 'startbar_resized'
 
 * Advanced Usage
