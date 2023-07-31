@@ -25,9 +25,11 @@ options:
 $(OBJ): $(SRCDIR)config.h config.mk $(SRCDIR)drw.h $(SRCDIR)util.h
 
 $(OBJDIR)%.o : $(SRCDIR)%.c
+	@mkdir -p $(@D)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 $(BINDIR)% : $(OBJDIR)%.o $(OBJDIR)drw.o $(OBJDIR)util.o
+	@mkdir -p $(@D)
 	$(CC) -o $@ $< $(OBJDIR)drw.o $(OBJDIR)util.o $(LDFLAGS) 
 
 clean:
