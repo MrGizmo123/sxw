@@ -2,7 +2,7 @@
 #+AUTHOR: liquidcat
 
 * What is this?
-~sxw~ is a collection of simple C programs that you can use to create pretty widget screens or status bars. Like this! [[./images/final_rice.png]]. Created mainly for ~dwm~, ~sxw~ aims to be as light as possible (so as to run on my potato without lag). It also aims to have as few dependencies as possible. Only xorg and certain xorg developemnt files are required by ~sxw~ as dependencies. It is (clearly) very heavily inspired by [[https:suckless.org][suckless]] software. (I have actually taken all the text rendering code from dmenu).
+~sxw~ is a collection of simple C programs that you can use to create pretty widget screens or status bars. Like this! [[./images/final_rice.png]]. Created mainly for ~dwm~, ~sxw~ aims to be as light as possible (so as to run on my potato without lag). It also aims to have as few dependencies as possible. Only xorg and certain xorg developemnt files are required by ~sxw~ as dependencies. It is (clearly) very heavily inspired by [[https://suckless.org][suckless]] software. (I have actually taken all the text rendering code from dmenu).
 
 * Installation
 Before installing it you will need some xorg development files. Install these packages according to your system.
@@ -14,7 +14,7 @@ Before installing it you will need some xorg development files. Install these pa
 Just clone this repo onto your machine and compile and install it.
 #+begin_src shell
 git clone https://github.com/MrGizmo123/sxw
-cd https://github.com/MrGizmo123/sxw
+cd sxw
 sudo make all
 #+end_src
 
@@ -72,7 +72,7 @@ To resize the status bar, simply replace 'startw' with 'startbar' and 'startw_re
 * Advanced Usage
 ~sxw~ is all about customization! When creating you own layout, you will be using two types of widgets the most:
 ** Icon Buttons
-This is a widget that acts as a button. It will run a certain command when clicked. That is all. You can specify its ~position~, ~width~, ~height~ (all in pixels), ~font-size~ and ~display-string~ and ~command~. The ~display-string~ can (and usually does) contain icons using [[https:fontawesome.com][fontawesome]]. ~command~ is obviously the shell command that runs when it is clicked. If the command ends up too complicated, then just create a shell script file and put that as the ~command~. *The contents of an iconbutton cannot change*
+This is a widget that acts as a button. It will run a certain command when clicked. That is all. You can specify its ~position~, ~width~, ~height~ (all in pixels), ~font-size~ and ~display-string~ and ~command~. The ~display-string~ can (and usually does) contain icons using [[https://fontawesome.com][fontawesome]]. ~command~ is obviously the shell command that runs when it is clicked. If the command ends up too complicated, then just create a shell script file and put that as the ~command~. *The contents of an iconbutton cannot change*
 
 The command is:
 #+begin_src shell
@@ -95,9 +95,9 @@ bin/infowidget [xpos] [ypos] [width] [height] [override-redirect] [textsize] [co
 These are custom widgets that do things that are more complicated than the generic ~iconbutton~ and ~infowidget~. These include:
 + brightness - controls the screen brightness using ~xbacklight~ (controlled by scrolling on it)
 + volume - a volume slider (controlled by scrolling on it)
-+ weather - fetches weather from [[https:wttr.in][wttr.in]]
++ weather - fetches weather from [[https://wttr.in][wttr.in]]
 + quotes - displays random quote from ~data/quotes.txt~
-+ planets - displays the next nearest rising or setting time of the Mercury, Venus, Mars, Jupiter, Saturn. Reads data from file ~data/rts-data~ (Calculated using [[https:stellarium.org][Stellarium]], you will need to recalculate this to match your location)
++ planets - displays the next nearest rising or setting time of the Mercury, Venus, Mars, Jupiter, Saturn. Reads data from file ~data/rts-data~ (Calculated using [[https://stellarium.org][Stellarium]], you will need to recalculate this to match your location)
 + mpdinfo - displays name of song playing and shows a(non interactive) progress bar
 + mpdplay - just a playbutton
 
