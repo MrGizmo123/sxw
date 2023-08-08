@@ -63,7 +63,7 @@ Some widgets require some commands to be available, they are given here:
 The rounded corners seen the screenshots are due to the compositor (picom in this case).
   
 ** Different screen size
-The default setup is made for a 1920x1080 screen. It will look off centered and wierd on other sizes. A helper script: ~scripts/resizer~ is given. Resizer is used as follows
+The default setup is made for a 1920x1080 screen. It will look off centered and weird on other sizes. A helper script: ~scripts/resizer~ is given. Resizer is used as follows
 #+begin_src shell
 cd scripts
 ./resizer [original width] [original height] [new width] [new height] startw > startw_resized
