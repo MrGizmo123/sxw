@@ -45,7 +45,7 @@ static void redraw(int action)
     /* put whatever you want to draw here */
 
     char state_string[2];
-    sh("mpc status | grep playing 2>1 1>/dev/null && echo 1 || echo 0", state_string, 2);
+    sh("mpc status | grep playing 1>/dev/null && echo 1 || echo 0", state_string, 2);
 
     state = atoi(state_string);
 
